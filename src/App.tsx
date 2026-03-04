@@ -2,12 +2,105 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { encrypt, decrypt } from './utils/railFence';
 import RailGrid from './components/RailGrid';
+import PlayfairUI from './components/PlayfairUI';
+import OtpUI from './components/OtpUI';
 
 // ─── Rail colors ──────────────────────────────────────────────────────────────
 export const RAIL_COLORS = [
   '#00f5ff', '#ff00aa', '#aaff00', '#ff6600',
   '#cc00ff', '#ffff00', '#ff3333', '#00ff88',
 ];
+
+type CipherKey = 'railfence' | 'playfair' | 'otp';
+
+// ─── CipherSelector ───────────────────────────────────────────────────────────
+function CipherSelector({ onSelect }: { onSelect: (c: CipherKey) => void }) {
+  const ciphers: Array<{
+    key: CipherKey;
+    name: string;
+    sub: string;
+    desc: string;
+    accent: string;
+    tag: string;
+  }> = [
+    {
+      key:    'railfence',
+      name:   'RAIL FENCE',
+      sub:    'CIPHER',
+      desc:   'Zigzag transposition cipher',
+      accent: '#00f5ff',
+      tag:    'TRANSPOSITION',
+    },
+    {
+      key:    'playfair',
+      name:   'PLAYFAIR',
+      sub:    'CIPHER',
+      desc:   '5×5 digraph substitution cipher',
+      accent: '#ff00aa',
+      tag:    'SUBSTITUTION',
+    },
+    {
+      key:    'otp',
+      name:   'ONE-TIME',
+      sub:    'PAD',
+      desc:   'Theoretically unbreakable XOR cipher',
+      accent: '#ffff00',
+      tag:    'PERFECT SECRECY',
+    },
+  ];
+
+  return (
+    <div className="app">
+      <div className="overlay-grid"  aria-hidden="true" />
+      <div className="overlay-scan"  aria-hidden="true" />
+      <div className="overlay-sweep" aria-hidden="true" />
+
+      <div className="app-inner selector-inner">
+        <header className="header">
+          <div className="header-badge">CIPHER STUDIO</div>
+          <h1 className="title">
+            <span className="title-cipher">CIPHER</span>{' '}
+            <span className="title-studio">STUDIO</span>
+          </h1>
+          <p className="subtitle">select a cipher to begin</p>
+        </header>
+
+        <div className="selector-grid">
+          {ciphers.map((c) => (
+            <button
+              key={c.key}
+              className="selector-card"
+              style={{
+                '--card-accent':    c.accent,
+                '--card-accent-20': c.accent + '20',
+                '--card-accent-40': c.accent + '40',
+                '--card-accent-08': c.accent + '08',
+              } as React.CSSProperties}
+              onClick={() => onSelect(c.key)}
+            >
+              <div className="selector-card-tag"
+                style={{ color: c.accent + 'aa', borderColor: c.accent + '30' }}>
+                {c.tag}
+              </div>
+              <div className="selector-card-name">
+                <span style={{ color: c.accent, textShadow: `0 0 14px ${c.accent}` }}>
+                  {c.name}
+                </span>
+                <br />
+                <span className="selector-card-sub">{c.sub}</span>
+              </div>
+              <p className="selector-card-desc">{c.desc}</p>
+              <div className="selector-card-cta"
+                style={{ color: c.accent + 'cc', borderColor: c.accent + '30' }}>
+                OPEN →
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ─── RailsSlider ──────────────────────────────────────────────────────────────
 function RailsSlider({ value, onChange }: { value: number; onChange: (v: number) => void }) {
@@ -117,27 +210,23 @@ function InfoPanel() {
   );
 }
 
-// ─── Main App ─────────────────────────────────────────────────────────────────
-export default function App() {
-  // Core state
+// ─── RailFenceUI ──────────────────────────────────────────────────────────────
+function RailFenceUI({ onBack }: { onBack: () => void }) {
   const [inputText,  setInputText]  = useState('WEAREDISCOVEREDFLEEAATONCE');
   const [numRails,   setNumRails]   = useState(3);
   const [mode,       setMode]       = useState<'encrypt' | 'decrypt'>('encrypt');
   const [outputText, setOutputText] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Animation state
-  const [visibleCount, setVisibleCount] = useState<number | null>(null); // null = show all
+  const [visibleCount, setVisibleCount] = useState<number | null>(null);
   const [animating,    setAnimating]    = useState(false);
   const [animSpeed,    setAnimSpeed]    = useState(120);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // UI state
   const [glitching, setGlitching] = useState(false);
   const [infoOpen,  setInfoOpen]  = useState(false);
   const glitchRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── Real-time output ───────────────────────────────────────────────────────
   useEffect(() => {
     if (!inputText.trim()) { setOutputText(''); return; }
     setOutputText(
@@ -145,7 +234,6 @@ export default function App() {
     );
   }, [inputText, numRails, mode]);
 
-  // ── Glitch on output change ────────────────────────────────────────────────
   useEffect(() => {
     if (!outputText) return;
     if (glitchRef.current) clearTimeout(glitchRef.current);
@@ -154,14 +242,12 @@ export default function App() {
     return () => { if (glitchRef.current) clearTimeout(glitchRef.current); };
   }, [outputText]);
 
-  // ── Reset animation when inputs change ────────────────────────────────────
   useEffect(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     setAnimating(false);
     setVisibleCount(null);
   }, [inputText, numRails, mode]);
 
-  // ── Cleanup on unmount ─────────────────────────────────────────────────────
   useEffect(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -169,7 +255,6 @@ export default function App() {
     };
   }, []);
 
-  // ── Animation controls ─────────────────────────────────────────────────────
   const handleAnimate = () => {
     if (animating) {
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -210,17 +295,15 @@ export default function App() {
 
       <div className="app-inner">
 
-        {/* ── Header ──────────────────────────────────────────────────────── */}
         <header className="header">
           <div className="header-top-row">
+            <button className="back-btn" onClick={onBack}>← BACK</button>
             <div className="header-badge">RAIL FENCE CIPHER</div>
             <button
               className={`info-btn ${infoOpen ? 'info-btn-active' : ''}`}
               onClick={() => setInfoOpen((o) => !o)}
               aria-label="About this cipher"
-            >
-              ?
-            </button>
+            >?</button>
           </div>
 
           <h1 className="title">
@@ -229,7 +312,6 @@ export default function App() {
           </h1>
           <p className="subtitle">classical transposition cipher simulator</p>
 
-          {/* Key badge with tooltip */}
           <div className="key-pill-wrap">
             <div className="key-pill">
               <span className="key-label">KEY</span>
@@ -243,11 +325,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* Collapsible info panel */}
           {infoOpen && <InfoPanel />}
         </header>
 
-        {/* ── Controls row ────────────────────────────────────────────────── */}
         <section className="controls-row">
           <div className="input-wrap">
             <label className="panel-label" htmlFor="rf-input">
@@ -274,7 +354,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── Output panel ────────────────────────────────────────────────── */}
         <section className="output-panel">
           <div className="output-header">
             <span className="panel-label">
@@ -299,12 +378,10 @@ export default function App() {
           )}
         </section>
 
-        {/* ── Visualization ────────────────────────────────────────────────── */}
         <section className="viz-section">
           <div className="viz-section-header">
             <span className="panel-label panel-label--green">ZIGZAG VISUALIZATION</span>
             <div className="viz-controls">
-              {/* Speed slider */}
               <label className="anim-speed-wrap">
                 <span className="control-label">SPEED</span>
                 <input
@@ -315,7 +392,6 @@ export default function App() {
                 />
                 <span className="anim-speed-val">{animSpeed}ms</span>
               </label>
-              {/* Animate / Reset button */}
               <button
                 className={`anim-btn ${animating ? 'anim-btn-reset' : ''}`}
                 onClick={handleAnimate}
@@ -341,4 +417,15 @@ export default function App() {
       </div>
     </div>
   );
+}
+
+// ─── Main App ─────────────────────────────────────────────────────────────────
+export default function App() {
+  const [selected, setSelected] = useState<CipherKey | null>(null);
+
+  if (selected === 'railfence') return <RailFenceUI onBack={() => setSelected(null)} />;
+  if (selected === 'playfair')  return <PlayfairUI  onBack={() => setSelected(null)} />;
+  if (selected === 'otp')       return <OtpUI       onBack={() => setSelected(null)} />;
+
+  return <CipherSelector onSelect={setSelected} />;
 }

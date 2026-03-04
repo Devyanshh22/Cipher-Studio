@@ -1,0 +1,238 @@
+/* ─── PlayfairUI component styles ───────────────────────────────────────────── */
+
+/* Magenta panel-label variant */
+.panel-label--magenta {
+  color: rgba(255, 0, 170, 0.55);
+}
+.panel-label--magenta::before {
+  background: #ff00aa;
+  box-shadow: 0 0 6px #ff00aa;
+}
+
+/* ── Keyword input ────────────────────────────────────────────────────────── */
+.pf-keyword-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pf-keyword-input {
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ff00aa;
+  background: var(--bg-deep, #07070f);
+  border: 1px solid rgba(255, 0, 170, 0.2);
+  border-radius: 6px;
+  padding: 10px 14px;
+  outline: none;
+  width: 100%;
+  caret-color: #ff00aa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-shadow: 0 0 8px rgba(255, 0, 170, 0.3);
+}
+.pf-keyword-input::placeholder {
+  color: rgba(255, 0, 170, 0.2);
+  text-shadow: none;
+}
+.pf-keyword-input:focus {
+  border-color: rgba(255, 0, 170, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 0, 170, 0.15), 0 0 16px rgba(255, 0, 170, 0.1);
+}
+
+/* ── Title accent for Playfair ────────────────────────────────────────────── */
+.title-playfair {
+  color: #ff00aa;
+  text-shadow: 0 0 12px #ff00aa, 0 0 30px rgba(255, 0, 170, 0.35);
+}
+
+/* ── Viz layout ───────────────────────────────────────────────────────────── */
+.pf-viz-layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ── 5×5 Key Matrix ───────────────────────────────────────────────────────── */
+.pf-matrix-wrap {
+  flex-shrink: 0;
+}
+
+.pf-matrix {
+  display: grid;
+  grid-template-columns: repeat(5, 44px);
+  grid-template-rows: repeat(5, 44px);
+  gap: 4px;
+}
+
+.pf-cell {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 0, 170, 0.12);
+  background: rgba(255, 0, 170, 0.04);
+  color: rgba(255, 0, 170, 0.55);
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+  animation: cell-enter 150ms ease-out both;
+  cursor: default;
+  user-select: none;
+}
+.pf-cell:hover {
+  border-color: rgba(255, 0, 170, 0.35);
+  color: #ff00aa;
+}
+
+.pf-cell-a {
+  background: rgba(0, 245, 255, 0.12) !important;
+  border-color: #00f5ff !important;
+  color: #00f5ff !important;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.25);
+}
+
+.pf-cell-b {
+  background: rgba(170, 255, 0, 0.12) !important;
+  border-color: #aaff00 !important;
+  color: #aaff00 !important;
+  box-shadow: 0 0 10px rgba(170, 255, 0, 0.25);
+}
+
+/* ── Step panel ───────────────────────────────────────────────────────────── */
+.pf-step-panel {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Navigation row */
+.pf-step-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pf-nav-btn {
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  font-size: 14px;
+  font-weight: 800;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 0, 170, 0.25);
+  background: transparent;
+  color: rgba(255, 0, 170, 0.55);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pf-nav-btn:hover:not(:disabled) {
+  border-color: #ff00aa;
+  color: #ff00aa;
+}
+.pf-nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+.pf-step-counter {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--text-dim, #4a5568);
+}
+.pf-step-counter strong {
+  color: #ff00aa;
+}
+
+/* Detail card */
+.pf-step-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(255, 0, 170, 0.03);
+  border: 1px solid rgba(255, 0, 170, 0.1);
+  border-radius: 8px;
+}
+
+.pf-digraph-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pf-digraph-box {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid;
+  min-width: 58px;
+  text-align: center;
+}
+.pf-dg-a {
+  color: #00f5ff;
+  border-color: rgba(0, 245, 255, 0.3);
+  background: rgba(0, 245, 255, 0.06);
+  text-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+}
+.pf-dg-out {
+  color: #aaff00;
+  border-color: rgba(170, 255, 0, 0.3);
+  background: rgba(170, 255, 0, 0.06);
+  text-shadow: 0 0 8px rgba(170, 255, 0, 0.3);
+}
+
+.pf-arrow {
+  font-size: 16px;
+  color: rgba(255, 0, 170, 0.3);
+}
+
+.pf-rule-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: rgba(255, 0, 170, 0.6);
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 0, 170, 0.15);
+  border-radius: 4px;
+  background: rgba(255, 0, 170, 0.05);
+  align-self: flex-start;
+}
+
+/* All digraphs chips */
+.pf-all-digraphs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pf-dg-chip {
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 0, 170, 0.15);
+  background: transparent;
+  color: rgba(255, 0, 170, 0.35);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.pf-dg-chip:hover {
+  border-color: rgba(255, 0, 170, 0.45);
+  color: rgba(255, 0, 170, 0.7);
+}
+.pf-dg-chip-active {
+  /* inline style overrides */
+}
