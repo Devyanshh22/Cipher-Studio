@@ -1,4 +1,4 @@
-# Cipher Studio
+# Cipher Studio - An educational platform to learn Encrytpion Algorhithms visually!
 
 An interactive browser-based simulator for classical cryptographic ciphers — built to make the inner workings of encryption visible, not just functional.
 
