@@ -1,0 +1,211 @@
+/* ─── RailGrid component styles ─────────────────────────────────────────────── */
+
+.rg-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────────── */
+.rg-empty {
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: rgba(0, 245, 255, 0.18);
+  text-align: center;
+  padding: 0 16px;
+}
+
+/* ── Grid scroll container ────────────────────────────────────────────────── */
+.rg-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 6px;
+  /* custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 245, 255, 0.18) transparent;
+}
+.rg-scroll::-webkit-scrollbar { height: 4px; }
+.rg-scroll::-webkit-scrollbar-track { background: transparent; }
+.rg-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.18);
+  border-radius: 2px;
+}
+
+/* ── Canvas (relative container for SVG + cells) ─────────────────────────── */
+.rg-canvas {
+  position: relative;
+  /* width/height set inline from JS */
+}
+
+/* ── SVG overlay ─────────────────────────────────────────────────────────── */
+.rg-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ── Cell entrance animation ──────────────────────────────────────────────── */
+@keyframes cell-enter {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Character cells ──────────────────────────────────────────────────────── */
+.rg-cell {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  border-radius: 4px;
+  border: 1px solid;
+  user-select: none;
+  letter-spacing: 0;
+  animation: cell-enter 150ms ease-out both;
+  transition: box-shadow 0.15s, transform 0.1s;
+  cursor: default;
+}
+.rg-cell:hover {
+  box-shadow: 0 0 10px currentColor;
+  transform: scale(1.08);
+  z-index: 2;
+}
+
+/* ── Truncation notice ────────────────────────────────────────────────────── */
+.rg-truncated {
+  margin-top: 8px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(255, 102, 0, 0.55);
+}
+
+/* ── Rail Legend ──────────────────────────────────────────────────────────── */
+.rg-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.rg-rail-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rg-rail-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rg-rail-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  width: 46px;
+  flex-shrink: 0;
+}
+
+.rg-rail-chars {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 2px 10px;
+  border-radius: 3px;
+  border: 1px solid;
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  min-width: 24px;
+  word-break: break-all;
+}
+
+.rg-rail-empty {
+  color: inherit;
+  opacity: 0.35;
+}
+
+/* ── Step-by-step breakdown ───────────────────────────────────────────────── */
+.rg-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 680px) {
+  .rg-steps {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+}
+
+.rg-step {
+  flex: 1;
+  padding: 12px 14px;
+  background: rgba(0, 245, 255, 0.022);
+  border: 1px solid rgba(0, 245, 255, 0.08);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+@media (min-width: 680px) {
+  /* Connect steps visually */
+  .rg-step:not(:last-child) {
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+  }
+  .rg-step:not(:first-child):not(:last-child) {
+    border-radius: 0;
+  }
+  .rg-step:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+}
+
+.rg-step-num {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  color: rgba(0, 245, 255, 0.28);
+}
+
+.rg-step-text {
+  font-size: 11px;
+  color: #546070;
+  line-height: 1.55;
+}
+
+.rg-step-output {
+  font-weight: 700;
+  word-break: break-all;
+  display: inline;
+}
+
+/* Arrow between steps (desktop only) */
+.rg-step-arrow {
+  font-size: 16px;
+  color: rgba(0, 245, 255, 0.16);
+  align-self: center;
+  flex-shrink: 0;
+  padding: 0 6px;
+  display: none;
+}
+
+@media (min-width: 680px) {
+  .rg-step-arrow {
+    display: block;
+  }
+}

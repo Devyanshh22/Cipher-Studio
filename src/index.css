@@ -1,13 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --rail-0: #00ffff;   /* cyan */
+  --rail-1: #ff00ff;   /* magenta */
+  --rail-2: #aaff00;   /* yellow-green */
+  --rail-3: #ff8800;   /* orange */
+  --rail-4: #ff3366;   /* red-pink */
+  --rail-5: #aa44ff;   /* purple */
+  --rail-6: #00ff88;   /* mint */
+  --rail-7: #ffee00;   /* yellow */
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  background-color: #020817;
+  color: #e2e8f0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0f1e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e3a5f;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00ffff44;
+}
+
+/* Neon glow utilities */
+.neon-cyan {
+  color: #00ffff;
+  text-shadow: 0 0 8px #00ffff88;
+}
+.neon-magenta {
+  color: #ff00ff;
+  text-shadow: 0 0 8px #ff00ff88;
+}
+.neon-green {
+  color: #aaff00;
+  text-shadow: 0 0 8px #aaff0088;
+}
+.border-neon {
+  border-color: #00ffff33;
+  box-shadow: 0 0 12px #00ffff11, inset 0 0 12px #00000044;
+}
+
+/* Rail fence grid */
+.rf-grid {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.rf-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+.rf-cell.active {
+  border: 1px solid currentColor;
+}
+.rf-cell.current-highlight {
+  animation: pulse-cell 0.4s ease;
+}
+@keyframes pulse-cell {
+  0%   { transform: scale(1.4); opacity: 0.6; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* Step highlight animation */
+.step-active {
+  border-left: 3px solid #00ffff;
+  background: #00ffff0a;
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+}
+.tooltip .tooltip-content {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 50;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.tooltip:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Range input styling */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #1e3a5f;
+  border-radius: 2px;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #00ffff;
+  cursor: pointer;
+  box-shadow: 0 0 6px #00ffff;
+}
+input[type=range]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #00ffff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 6px #00ffff;
+}
+
+/* Animate button */
+@keyframes scanline {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+.scanline-bg {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    #00ffff08 2px,
+    #00ffff08 4px
+  );
+}
+
+/* Connector line between zigzag cells */
+.connector-line {
+  position: absolute;
+  background: currentColor;
+  opacity: 0.25;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* Copy button flash */
+@keyframes copy-flash {
+  0%   { background: #00ffff33; }
+  100% { background: transparent; }
+}
+.copy-flash {
+  animation: copy-flash 0.5s ease forwards;
 }
