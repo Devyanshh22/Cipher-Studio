@@ -1,46 +1,91 @@
-# Getting Started with Create React App
+# Cipher Studio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An interactive browser-based simulator for classical cryptographic ciphers — built to make the inner workings of encryption visible, not just functional.
 
-## Available Scripts
+**Live demo → [devyanshh22.github.io/Cipher-Studio](https://devyanshh22.github.io/Cipher-Studio)**
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## What is this?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Most explanations of classical ciphers are either too abstract or too academic. Cipher Studio bridges that gap by letting you type a message, pick a cipher, and *watch* the encryption happen — character by character, step by step.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+It's not a security tool. It's a learning tool.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Ciphers
 
-### `npm run build`
+### Rail Fence
+A transposition cipher that writes your message in a zigzag pattern across a number of "rails", then reads each rail left to right to produce the ciphertext. The key is simply the number of rails (2–8).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Animated zigzag grid visualization
+- Per-rail character breakdown
+- Step-by-step explainer
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Playfair
+A digraph substitution cipher that encrypts pairs of letters using a 5×5 matrix built from a keyword. Each pair is transformed by one of three geometric rules depending on where the two characters fall in the matrix.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Interactive 5×5 key matrix with live cell highlighting
+- Digraph-by-digraph step browser
+- Rule badge (same row / same column / rectangle)
 
-### `npm run eject`
+### One-Time Pad
+An XOR cipher where every character is combined with a matching key character. When the key is truly random and never reused, it is mathematically proven to be unbreakable.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Random key generator
+- Hex ciphertext output
+- Per-character XOR table: `CHAR ⊕ KEY = HEX`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## How it's built
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+| Layer | Choice |
+|---|---|
+| Framework | React (TypeScript, Create React App) |
+| Styling | Plain CSS with custom properties — no UI library |
+| Cipher logic | Pure JavaScript — no external crypto dependencies |
+| Fonts | JetBrains Mono |
+| Deployment | GitHub Pages via `gh-pages` |
 
-## Learn More
+All three cipher algorithms are implemented from scratch in `src/utils/` and are fully decoupled from the UI. The visualization components read from the same algorithm functions, so what you see is always exactly what the cipher is doing.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Running locally
+
+```bash
+npm install
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Project structure
+
+```
+src/
+  utils/
+    railFence.js     — Rail Fence encrypt / decrypt / pattern
+    playfair.js      — Playfair matrix, digraph rules, step data
+    otp.js           — XOR encrypt / decrypt / key generator
+  components/
+    RailGrid.jsx     — Zigzag grid + legend + steps
+    PlayfairUI.jsx   — Key matrix + digraph step browser
+    OtpUI.jsx        — XOR table visualization
+  App.tsx            — Cipher selector + Rail Fence UI
+  App.css            — All shared styles
+```
+
+---
+
+## Deploy
+
+```bash
+npm run deploy
+```
+
+Builds and publishes to the `gh-pages` branch automatically.
