@@ -1,0 +1,463 @@
+/* ─── CaesarUI component styles ─────────────────────────────────────────────── */
+
+/* ── Orange colour tokens ─────────────────────────────────────────────────── */
+:root {
+  --orange: #ff6600;
+}
+
+/* ── Title accent ─────────────────────────────────────────────────────────── */
+.title-caesar {
+  color: #ff6600;
+  text-shadow:
+    0 0 12px #ff6600,
+    0 0 32px rgba(255, 102, 0, 0.38),
+    0 0 60px rgba(255, 102, 0, 0.12);
+  animation: glow-pulse-orange 4s ease-in-out infinite;
+}
+
+@keyframes glow-pulse-orange {
+  0%, 100% {
+    text-shadow:
+      0 0 12px #ff6600,
+      0 0 32px rgba(255, 102, 0, 0.38),
+      0 0 60px rgba(255, 102, 0, 0.12);
+  }
+  50% {
+    text-shadow:
+      0 0 18px #ff6600,
+      0 0 48px rgba(255, 102, 0, 0.52),
+      0 0 90px rgba(255, 102, 0, 0.18);
+  }
+}
+
+/* ── Orange panel-label variant ───────────────────────────────────────────── */
+.panel-label--orange {
+  color: rgba(255, 102, 0, 0.65);
+}
+.panel-label--orange::before {
+  background: #ff6600;
+  box-shadow: 0 0 6px #ff6600;
+}
+
+/* ── Info / back button orange tint ───────────────────────────────────────── */
+.csr-info-btn {
+  border-color: rgba(255, 102, 0, 0.22) !important;
+  color: rgba(255, 102, 0, 0.45) !important;
+}
+.csr-info-btn:hover {
+  border-color: rgba(255, 102, 0, 0.65) !important;
+  color: #ff6600 !important;
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.18) !important;
+}
+.csr-info-btn-active {
+  background: rgba(255, 102, 0, 0.08) !important;
+  border-color: rgba(255, 102, 0, 0.55) !important;
+  color: #ff6600 !important;
+}
+
+/* ── Info panel (orange tint) ─────────────────────────────────────────────── */
+.csr-info-panel {
+  background: rgba(255, 102, 0, 0.025) !important;
+  border-color: rgba(255, 102, 0, 0.12) !important;
+}
+.csr-heading {
+  color: rgba(255, 102, 0, 0.65) !important;
+}
+
+/* ── Shift slider ─────────────────────────────────────────────────────────── */
+.csr-shift-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.csr-shift-number {
+  font-size: 52px;
+  font-weight: 900;
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  color: #ff6600;
+  text-shadow: 0 0 24px rgba(255, 102, 0, 0.5);
+  min-width: 64px;
+  text-align: center;
+  line-height: 1;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.csr-shift-controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.csr-shift-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.csr-shift-sublabel {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.csr-shift-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 102, 0, 0.6);
+}
+
+.csr-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 102, 0, 0.7) 0%,
+    rgba(255, 102, 0, 0.7) calc(var(--pct, 0) * 1%),
+    rgba(255, 255, 255, 0.08) calc(var(--pct, 0) * 1%),
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+.csr-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff6600;
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.6), 0 0 0 2px rgba(255, 102, 0, 0.15);
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+.csr-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 14px rgba(255, 102, 0, 0.8), 0 0 0 3px rgba(255, 102, 0, 0.2);
+}
+.csr-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #ff6600;
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.6);
+  cursor: pointer;
+}
+
+/* ── Formula banner ───────────────────────────────────────────────────────── */
+.csr-formula-banner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  padding: 16px 24px;
+  background: rgba(255, 102, 0, 0.04);
+  border: 1px solid rgba(255, 102, 0, 0.22);
+  border-radius: 10px;
+  position: relative;
+}
+.csr-formula-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 102, 0, 0.5), transparent);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.csr-formula-eq {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ff6600;
+  text-shadow: 0 0 12px rgba(255, 102, 0, 0.5);
+  white-space: nowrap;
+}
+
+.csr-formula-example {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.35);
+  border-left: 1px solid rgba(255, 102, 0, 0.2);
+  padding-left: 20px;
+  white-space: nowrap;
+}
+
+/* ── Alphabet Ring ────────────────────────────────────────────────────────── */
+.csr-ring-wrap {
+  background: rgba(255, 102, 0, 0.03);
+  border: 1px solid rgba(255, 102, 0, 0.1);
+  border-radius: 8px;
+  padding: 14px 12px;
+  overflow: hidden;
+}
+
+.csr-ring-title {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.12);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.csr-ring-viewport {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fade edges */
+.csr-ring-viewport::before,
+.csr-ring-viewport::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 32px;
+  z-index: 2;
+  pointer-events: none;
+}
+.csr-ring-viewport::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-deep, #07070f), transparent);
+}
+.csr-ring-viewport::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-deep, #07070f), transparent);
+}
+
+.csr-ring-row {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  /* no wrap */
+  flex-wrap: nowrap;
+  will-change: transform;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.csr-ring-cell {
+  width: 26px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+  border: 1px solid;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.csr-ring-plain {
+  color: rgba(0, 245, 255, 0.55);
+  border-color: rgba(0, 245, 255, 0.18);
+  background: rgba(0, 245, 255, 0.04);
+}
+
+.csr-ring-cipher {
+  color: rgba(255, 102, 0, 0.55);
+  border-color: rgba(255, 102, 0, 0.18);
+  background: rgba(255, 102, 0, 0.04);
+}
+
+.csr-ring-cell-active-plain {
+  color: #00f5ff !important;
+  border-color: rgba(0, 245, 255, 0.6) !important;
+  background: rgba(0, 245, 255, 0.12) !important;
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.25);
+}
+
+.csr-ring-cell-active-cipher {
+  color: #ff6600 !important;
+  border-color: rgba(255, 102, 0, 0.7) !important;
+  background: rgba(255, 102, 0, 0.16) !important;
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.35);
+}
+
+.csr-ring-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  position: relative;
+}
+
+.csr-ring-connector::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 245, 255, 0.4), rgba(255, 102, 0, 0.4));
+}
+
+.csr-ring-arrow {
+  font-size: 10px;
+  color: rgba(255, 102, 0, 0.5);
+  position: relative;
+  z-index: 1;
+  line-height: 1;
+}
+
+.csr-ring-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 0 2px;
+}
+
+.csr-ring-label {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+/* ── Frequency Analysis ───────────────────────────────────────────────────── */
+.csr-freq-wrap {
+  background: rgba(255, 102, 0, 0.02);
+  border: 1px solid rgba(255, 102, 0, 0.1);
+  border-radius: 8px;
+  padding: 14px 12px;
+}
+
+.csr-freq-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.csr-freq-title {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.12);
+}
+
+.csr-best-guess {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 102, 0, 0.6);
+}
+
+.csr-best-guess-btn {
+  font-family: var(--font, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 102, 0, 0.35);
+  background: rgba(255, 102, 0, 0.06);
+  color: #ff6600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.csr-best-guess-btn:hover {
+  background: rgba(255, 102, 0, 0.14);
+  border-color: rgba(255, 102, 0, 0.65);
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.18);
+}
+.csr-best-guess-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.csr-freq-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 80px;
+  padding: 0 2px;
+}
+
+.csr-freq-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  height: 100%;
+  position: relative;
+}
+
+.csr-freq-bar-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  position: relative;
+}
+
+.csr-freq-bar-eng {
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+  background: rgba(255, 255, 255, 0.07);
+  position: absolute;
+  bottom: 0;
+  transition: height 0.3s ease;
+}
+
+.csr-freq-bar-cipher {
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+  position: absolute;
+  bottom: 0;
+  transition: height 0.3s ease;
+}
+
+.csr-freq-letter {
+  font-size: 7px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.18);
+  letter-spacing: 0;
+  flex-shrink: 0;
+}
+
+.csr-freq-letter-active {
+  color: #ff6600 !important;
+}
+
+.csr-freq-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.csr-freq-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.csr-freq-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}

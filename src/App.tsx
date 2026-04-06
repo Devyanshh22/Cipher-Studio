@@ -5,6 +5,7 @@ import RailGrid from './components/RailGrid';
 import PlayfairUI from './components/PlayfairUI';
 import OtpUI from './components/OtpUI';
 import VigenereUI from './components/VigenereUI';
+import CaesarUI from './components/CaesarUI';
 
 // ─── Rail colors ──────────────────────────────────────────────────────────────
 export const RAIL_COLORS = [
@@ -12,7 +13,7 @@ export const RAIL_COLORS = [
   '#cc00ff', '#ffff00', '#ff3333', '#00ff88',
 ];
 
-type CipherKey = 'railfence' | 'playfair' | 'otp' | 'vigenere';
+type CipherKey = 'railfence' | 'playfair' | 'otp' | 'vigenere' | 'caesar';
 
 // ─── CipherSelector ───────────────────────────────────────────────────────────
 function CipherSelector({ onSelect }: { onSelect: (c: CipherKey) => void }) {
@@ -55,6 +56,14 @@ function CipherSelector({ onSelect }: { onSelect: (c: CipherKey) => void }) {
       desc:   'Polyalphabetic keyword substitution cipher',
       accent: '#9d00ff',
       tag:    'POLYALPHABETIC',
+    },
+    {
+      key:    'caesar',
+      name:   'CAESAR',
+      sub:    'CIPHER',
+      desc:   'Monoalphabetic shift cipher with frequency analysis',
+      accent: '#ff6600',
+      tag:    'MONOALPHABETIC',
     },
   ];
 
@@ -436,6 +445,7 @@ export default function App() {
   if (selected === 'playfair')  return <PlayfairUI   onBack={() => setSelected(null)} />;
   if (selected === 'otp')       return <OtpUI        onBack={() => setSelected(null)} />;
   if (selected === 'vigenere')  return <VigenereUI   onBack={() => setSelected(null)} />;
+  if (selected === 'caesar')    return <CaesarUI     onBack={() => setSelected(null)} />;
 
   return <CipherSelector onSelect={setSelected} />;
 }
