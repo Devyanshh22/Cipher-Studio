@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Cipher-Studio/static/css/main.0a280f3e.css",
-    "main.js": "/Cipher-Studio/static/js/main.9c5da00e.js",
+    "main.css": "/Cipher-Studio/static/css/main.327a0228.css",
+    "main.js": "/Cipher-Studio/static/js/main.bba1fcb6.js",
     "static/js/453.238dbd58.chunk.js": "/Cipher-Studio/static/js/453.238dbd58.chunk.js",
     "index.html": "/Cipher-Studio/index.html",
-    "main.0a280f3e.css.map": "/Cipher-Studio/static/css/main.0a280f3e.css.map",
-    "main.9c5da00e.js.map": "/Cipher-Studio/static/js/main.9c5da00e.js.map",
+    "main.327a0228.css.map": "/Cipher-Studio/static/css/main.327a0228.css.map",
+    "main.bba1fcb6.js.map": "/Cipher-Studio/static/js/main.bba1fcb6.js.map",
     "453.238dbd58.chunk.js.map": "/Cipher-Studio/static/js/453.238dbd58.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0a280f3e.css",
-    "static/js/main.9c5da00e.js"
+    "static/css/main.327a0228.css",
+    "static/js/main.bba1fcb6.js"
   ]
 }
