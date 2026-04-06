@@ -4,6 +4,7 @@ import { encrypt, decrypt } from './utils/railFence';
 import RailGrid from './components/RailGrid';
 import PlayfairUI from './components/PlayfairUI';
 import OtpUI from './components/OtpUI';
+import VigenereUI from './components/VigenereUI';
 
 // ─── Rail colors ──────────────────────────────────────────────────────────────
 export const RAIL_COLORS = [
@@ -11,7 +12,7 @@ export const RAIL_COLORS = [
   '#cc00ff', '#ffff00', '#ff3333', '#00ff88',
 ];
 
-type CipherKey = 'railfence' | 'playfair' | 'otp';
+type CipherKey = 'railfence' | 'playfair' | 'otp' | 'vigenere';
 
 // ─── CipherSelector ───────────────────────────────────────────────────────────
 function CipherSelector({ onSelect }: { onSelect: (c: CipherKey) => void }) {
@@ -46,6 +47,14 @@ function CipherSelector({ onSelect }: { onSelect: (c: CipherKey) => void }) {
       desc:   'Theoretically unbreakable XOR cipher',
       accent: '#ffff00',
       tag:    'PERFECT SECRECY',
+    },
+    {
+      key:    'vigenere',
+      name:   'VIGENÈRE',
+      sub:    'CIPHER',
+      desc:   'Polyalphabetic keyword substitution cipher',
+      accent: '#9d00ff',
+      tag:    'POLYALPHABETIC',
     },
   ];
 
@@ -423,9 +432,10 @@ function RailFenceUI({ onBack }: { onBack: () => void }) {
 export default function App() {
   const [selected, setSelected] = useState<CipherKey | null>(null);
 
-  if (selected === 'railfence') return <RailFenceUI onBack={() => setSelected(null)} />;
-  if (selected === 'playfair')  return <PlayfairUI  onBack={() => setSelected(null)} />;
-  if (selected === 'otp')       return <OtpUI       onBack={() => setSelected(null)} />;
+  if (selected === 'railfence') return <RailFenceUI  onBack={() => setSelected(null)} />;
+  if (selected === 'playfair')  return <PlayfairUI   onBack={() => setSelected(null)} />;
+  if (selected === 'otp')       return <OtpUI        onBack={() => setSelected(null)} />;
+  if (selected === 'vigenere')  return <VigenereUI   onBack={() => setSelected(null)} />;
 
   return <CipherSelector onSelect={setSelected} />;
 }
